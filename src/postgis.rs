@@ -324,7 +324,7 @@ mod tests {
     }
 
     fn connect() -> Client {
-        match env::var("DBCONN") {
+        match env::var("DATABASE_URL") {
             Result::Ok(val) => Client::connect(&val as &str, NoTls),
             Result::Err(err) => panic!("{:#?}", err),
         }

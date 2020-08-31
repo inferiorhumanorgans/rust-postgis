@@ -64,9 +64,9 @@ for row in &conn.query("SELECT ST_AsTWKB(route) FROM busline", &[]).unwrap() {
 ## Unit tests
 
 Unit tests which need a PostgreSQL connection are ignored by default.
-To run the database tests, declare the connection in an environment variable `DBCONN`. Example:
+To run the database tests, declare the connection in an environment variable `DATABASE_URL`. Example:
 
-    export DBCONN=postgresql://user@localhost/testdb
+    export DATABASE_URL=postgresql://user@localhost/testdb
 
 Run the tests with
 

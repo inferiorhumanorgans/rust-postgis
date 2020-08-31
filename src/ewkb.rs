@@ -14,9 +14,13 @@ use std::iter::FromIterator;
 use std::mem;
 use std::slice::Iter;
 
+#[cfg(feature = "diesel-shim")] use crate::diesel_shim::PostgisGeometry;
+
 // --- Structs for reading PostGIS geometries into
 
 #[derive(PartialEq, Clone, Copy, Debug)]
+#[cfg_attr(feature = "diesel-shim", derive(AsExpression, FromSqlRow))]
+#[cfg_attr(feature = "diesel-shim", sql_type = "PostgisGeometry")]
 pub struct Point {
     pub x: f64,
     pub y: f64,
@@ -948,7 +952,9 @@ pub type MultiPolygonM = MultiPolygonT<PointM>;
 pub type MultiPolygonZM = MultiPolygonT<PointZM>;
 
 /// Generic Geometry Data Type
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "diesel-shim", derive(FromSqlRow, AsExpression))]
+#[cfg_attr(feature = "diesel-shim", sql_type = "PostgisGeometry")]
 pub enum GeometryT<P: postgis::Point + EwkbRead> {
     Point(P),
     LineString(LineStringT<P>),
@@ -1276,7 +1282,7 @@ pub type GeometryM = GeometryT<PointM>;
 /// OGC GeometryZM type
 pub type GeometryZM = GeometryT<PointZM>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct GeometryCollectionT<P: postgis::Point + EwkbRead> {
     pub geometries: Vec<GeometryT<P>>,
     pub srid: Option<i32>,

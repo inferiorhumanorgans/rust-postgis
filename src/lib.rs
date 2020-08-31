@@ -38,6 +38,10 @@
 //! }
 //! ```
 
+#[cfg(feature = "diesel-shim")]
+#[macro_use] extern crate diesel;
+#[cfg(test)] extern crate dotenv;
+
 pub mod error;
 mod types;
 pub use types::{LineString, MultiLineString, MultiPoint, MultiPolygon, Point, Polygon};
@@ -45,3 +49,6 @@ pub mod ewkb;
 pub mod mars;
 mod postgis;
 pub mod twkb;
+
+#[cfg(feature = "diesel-shim")]
+pub mod diesel_shim;
