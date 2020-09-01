@@ -9,6 +9,7 @@ rust-postgis
 An extension to rust-postgres, adds support for PostGIS.
 
 - PostGIS type helper
+- Optional diesel.rs integration
 - GCJ02 support (used offically in Mainland China)
 - Tiny WKB (TWKB) support
 
@@ -67,7 +68,7 @@ If built with the `diesel-shim` feature flag, this crate can be used along with 
 ## Unit tests
 
 Unit tests which need a PostgreSQL connection are ignored by default.
-To run the database tests, declare the connection in an environment variable `DATABASE_URL`. Example:
+To run the database tests, declare the connection in the environment variable `DATABASE_URL`. Example:
 
     export DATABASE_URL=postgresql://user@localhost/testdb
 
