@@ -38,7 +38,7 @@ match route {
 }
 ```
 
-## Writing other geometry types into PostGIS
+### Writing other geometry types into PostGIS
 
 rust-postgis supports writing geometry types into PostGIS which implement the following traits:
 
@@ -60,7 +60,7 @@ for row in &conn.query("SELECT ST_AsTWKB(route) FROM busline", &[]).unwrap() {
 }
 ```
 
-# Usage with the `diesel` crate
+## Usage with the `diesel` crate
 
 If built with the `diesel-shim` feature flag, this crate can be used along with the `diesel` ORM.  See the `bus_route` example for details.
 
