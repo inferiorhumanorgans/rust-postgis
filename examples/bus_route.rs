@@ -56,17 +56,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     let results = busline::table
         .load::<BusLine>(&connection)?;
 
-    for (i, row) in results.iter().enumerate() {
-        let BusLine { route, name } = row;
-        let new_stop = Stop {
+    let stops : Vec<Stop> = results.iter().enumerate().map(|(i, busline)| {
+        let BusLine { route, name } = busline;
+
+        Stop {
             name: format!("{}{:03}", name, i),
             stop: *route.points.last().unwrap(),
-        };
+        }
+    }).collect();
 
-        diesel::insert_into(stops::table)
-            .values(&new_stop)
-            .execute(&connection)?;
-    }
+    diesel::insert_into(stops::table)
+        .values(&stops)
+        .execute(&connection)?;
 
     Ok(())
 }
