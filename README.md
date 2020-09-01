@@ -12,7 +12,7 @@ An extension to rust-postgres, adds support for PostGIS.
 - GCJ02 support (used offically in Mainland China)
 - Tiny WKB (TWKB) support
 
-## Usage
+## Usage with the `postgres` crate
 
 ```rust
 use postgres::{Client, NoTls};
@@ -60,6 +60,9 @@ for row in &conn.query("SELECT ST_AsTWKB(route) FROM busline", &[]).unwrap() {
 }
 ```
 
+# Usage with the `diesel` crate
+
+If built with the `diesel-shim` feature flag, this crate can be used along with the `diesel` ORM.  See the `bus_route` example for details.
 
 ## Unit tests
 

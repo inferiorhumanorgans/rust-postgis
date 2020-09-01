@@ -393,6 +393,8 @@ macro_rules! point_container_type {
     ($geotypetrait:ident for $geotype:ident) => {
         /// $geotypetrait
         #[derive(PartialEq, Clone, Debug)]
+        #[cfg_attr(feature = "diesel-shim", derive(AsExpression, FromSqlRow))]
+        #[cfg_attr(feature = "diesel-shim", sql_type = "PostgisGeometry")]
         pub struct $geotype<P: postgis::Point + EwkbRead> {
             pub points: Vec<P>,
             pub srid: Option<i32>,
@@ -441,6 +443,8 @@ macro_rules! geometry_container_type {
     // geometries containing lines and polygons
     ($geotypetrait:ident for $geotype:ident contains $itemtype:ident named $itemname:ident) => {
         #[derive(PartialEq, Clone, Debug)]
+        #[cfg_attr(feature = "diesel-shim", derive(AsExpression, FromSqlRow))]
+        #[cfg_attr(feature = "diesel-shim", sql_type = "PostgisGeometry")]
         pub struct $geotype<P: postgis::Point + EwkbRead> {
             pub $itemname: Vec<$itemtype<P>>,
             pub srid: Option<i32>,
